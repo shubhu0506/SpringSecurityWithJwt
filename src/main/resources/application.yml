@@ -13,3 +13,8 @@ logging:
     ROOT: DEBUG
     org.springframework.web: "error"
     org: "error"
+
+#Credentials
+app:
+  username: Subrat
+  password: Nayak
