@@ -1,6 +1,6 @@
 package com.jwt.authentication.controller;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +20,7 @@ import com.jwt.authentication.services.CustomUserDetailService;
 @RestController
 public class JwtController {
     
-	//private static Logger log = LoggerFactory.getLogger(JwtController.class);
+	private static Logger log = LoggerFactory.getLogger(JwtController.class);
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -34,7 +34,7 @@ public class JwtController {
 	@PostMapping("/token")
 	public ResponseEntity<?> generateToken(@RequestBody JwtRequest jwtRequest) throws Exception
 	{
-		System.out.println(jwtRequest);
+	    log.debug("JwtRequest : "+ jwtRequest);
 		try 
 		{
 			this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(),jwtRequest.getPassword()));
@@ -50,7 +50,8 @@ public class JwtController {
 		UserDetails userDetails=this.customUserDetailService.loadUserByUsername(jwtRequest.getUsername());
          String token=this.jwtUtil.generateToken(userDetails);
          
-         System.out.println(token);
+         log.info("this is token" + token);
+         //System.out.println(token);
          return ResponseEntity.ok(new JwtResponse(token));
 	}
  }
